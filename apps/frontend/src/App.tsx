@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { DEFAULT_DATE_RANGE } from '@/utils'
 import DateRangePicker from '@/components/DateRangePicker'
-import './App.css'
+import PurchaseFrequencyTable from '@/components/PurchaseFrequencyTable'
+import styles from './App.module.css'
 
 function App() {
   // 날짜 범위 상태
@@ -15,53 +16,50 @@ function App() {
   const [selectedCustomerId, setSelectedCustomerId] = useState<number | null>(null)
 
   return (
-    <div className="app">
-      <header className="app-header">
-        <h1>쇼핑몰 구매 데이터 대시보드</h1>
+    <div className={styles.app}>
+      <header className={styles.appHeader}>
+        <h1 className={styles.appHeaderTitle}>쇼핑몰 구매 데이터 대시보드</h1>
       </header>
 
-      <main className="app-main">
-        <section>
-          <h2 style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+      <main className={styles.appMain}>
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>
             기간 선택
-            <label style={{ fontWeight: 400, fontSize: '1rem', display: 'flex', alignItems: 'center', gap: 4 }}>
-              <input
-                type="checkbox"
-                checked={checkDateRange}
-                onChange={(e) => setCheckDateRange(e.target.checked)}
-                style={{ marginRight: 4 }}
-              />
+            <label className={styles.dateRangeLabel}>
+              <input type="checkbox" checked={checkDateRange} onChange={(e) => setCheckDateRange(e.target.checked)} />
               사용
             </label>
           </h2>
           {checkDateRange && <DateRangePicker from={dateRange.from} to={dateRange.to} onChange={setDateRange} />}
           {!checkDateRange && <div>전체 기간을 조회합니다.</div>}
         </section>
-        <section>
-          <h2>가격대별 구매 빈도</h2>
+        <div>
+          <section className={styles.section}>
+            <h2 className={styles.sectionTitle}>가격대별 구매 빈도</h2>
+            <PurchaseFrequencyTable dateRange={dateRange} />
+          </section>
 
-          {/* 구매빈도 */}
-          <div className="placeholder">테이블 영역</div>
-        </section>
+          <section className={styles.section}>
+            <h2 className={styles.sectionTitle}>고객 목록</h2>
 
-        <section>
-          <h2>고객 목록</h2>
-
-          {/* 고객 목록 */}
-          <div className="placeholder">고객 목록 영역</div>
-        </section>
+            {/* 고객 목록 */}
+            <div className={styles.placeholder}>고객 목록 영역</div>
+          </section>
+        </div>
       </main>
 
       {/* CustomerDetailPanel 사이드 패널 */}
       {selectedCustomerId && (
-        <aside className="side-panel">
-          <div className="side-panel-header">
-            <h3>고객 상세 구매 내역</h3>
-            <button onClick={() => setSelectedCustomerId(null)}>닫기</button>
+        <aside className={styles.sidePanel}>
+          <div className={styles.sidePanelHeader}>
+            <h3 className={styles.sidePanelHeaderTitle}>고객 상세 구매 내역</h3>
+            <button className={styles.sidePanelHeaderButton} onClick={() => setSelectedCustomerId(null)}>
+              닫기
+            </button>
           </div>
-          <div className="side-panel-content">
+          <div className={styles.sidePanelContent}>
             {/* 고객 상세 */}
-            <div className="placeholder">고객 ID: {selectedCustomerId}</div>
+            <div className={styles.placeholder}>고객 ID: {selectedCustomerId}</div>
           </div>
         </aside>
       )}

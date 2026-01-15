@@ -1,8 +1,8 @@
-import { getPurchaseFrequency, getPurchases } from '@/api'
+import { getPurchases } from '@/api'
 import { Purchase, DateRangeParams } from '@/types'
 import { convertToCSV, downloadCSV } from '@/utils/csv'
 import { comma } from '@/utils/number'
-import { useFetchApi } from '@/hooks/useFetchApi'
+import { usePurchaseFrequencyQuery } from '@/query/usePurchaseFrequencyQuery'
 import styles from './PurchaseFrequencyTable.module.css'
 
 const LoadingDisplay = () => (
@@ -37,7 +37,7 @@ const TableRow = ({ range, count }: { range: string; count: number }) => {
 }
 
 const PurchaseFrequencyTable = ({ dateRange }: { dateRange: DateRangeParams }) => {
-  const { data, loading, error, refetch } = useFetchApi(getPurchaseFrequency, dateRange, [dateRange.from, dateRange.to])
+  const { data, isSuccess, isFetching, isPaused, isError, refetch } = usePurchaseFrequencyQuery(dateRange)
 
   const handleDownloadCSV = async () => {
     try {
@@ -62,13 +62,13 @@ const PurchaseFrequencyTable = ({ dateRange }: { dateRange: DateRangeParams }) =
           </tr>
         </thead>
         <tbody>
-          {loading ? (
+          {isFetching || isPaused ? (
             <LoadingDisplay />
-          ) : error ? (
+          ) : isError ? (
             <ErrorDisplay onRetry={refetch} />
-          ) : (
+          ) : isSuccess ? (
             data!.map((row) => <TableRow key={row.range} range={row.range} count={row.count} />)
-          )}
+          ) : null}
         </tbody>
       </table>
     </div>

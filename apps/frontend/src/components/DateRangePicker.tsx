@@ -1,20 +1,20 @@
-import React from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { formatDateToISO, parseISOToDate } from '@/utils/date'
 import { DEFAULT_DATE_RANGE } from '@/utils/date'
+import styles from './DateRangePicker.module.css'
 interface DateRangePickerProps {
   from: string
   to: string
   onChange: (range: { from: string; to: string }) => void
 }
 
-const DateRangePicker: React.FC<DateRangePickerProps> = ({ from, to, onChange }) => {
+const DateRangePicker = ({ from, to, onChange }: DateRangePickerProps) => {
   const fromDate = parseISOToDate(from)
   const toDate = parseISOToDate(to)
 
   return (
-    <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+    <div className={styles.dateRangePicker}>
       <div>
         <DatePicker
           selected={fromDate}
