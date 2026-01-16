@@ -65,7 +65,7 @@ const CustomerList = ({ dateRange, onRowClick }: CustomerListProps) => {
         <div className={styles.sortButtons}>
           정렬
           <button className={!sortBy ? styles.active : ''} onClick={() => setSortBy(undefined)}>
-            초기화
+            기본
           </button>
           <button className={sortBy === 'asc' ? styles.active : ''} onClick={() => setSortBy('asc')}>
             금액 ⬆️

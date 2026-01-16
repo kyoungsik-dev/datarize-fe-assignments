@@ -1,0 +1,22 @@
+.container {
+  padding: 12px;
+}
+.placeholder {
+  padding: 12px;
+  color: #666;
+}
+.table {
+  margin-top: 16px;
+  width: 100%;
+  border-collapse: collapse;
+}
+.table th,
+.table td {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+.thumb {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+}

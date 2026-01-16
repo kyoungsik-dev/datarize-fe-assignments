@@ -3,7 +3,9 @@ import { DEFAULT_DATE_RANGE } from '@/utils'
 import DateRangePicker from '@/components/DateRangePicker'
 import PurchaseFrequencyTable from '@/components/PurchaseFrequencyTable'
 import CustomerList from '@/components/CustomerList'
+import CustomerDetail from '@/components/CustomerDetail'
 import styles from './App.module.css'
+import { Customer } from '@/types'
 
 function App() {
   // 날짜 범위 상태
@@ -18,8 +20,8 @@ function App() {
     setDateRange({ from: '', to: '' })
   }
 
-  // 선택된 고객 ID (사이드 패널용)
-  const [selectedCustomerId, setSelectedCustomerId] = useState<number | null>(null)
+  // 선택된 고객 (사이드 패널용)
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null)
 
   return (
     <div className={styles.app}>
@@ -48,25 +50,28 @@ function App() {
           <section className={styles.section} style={{ flex: '1 0 300px' }}>
             <h2 className={styles.sectionTitle}>고객 목록</h2>
 
-            <CustomerList dateRange={dateRange} />
+            <CustomerList dateRange={dateRange} onRowClick={(c) => setSelectedCustomer(c)} />
           </section>
         </div>
       </main>
 
       {/* CustomerDetailPanel 사이드 패널 */}
-      {selectedCustomerId && (
-        <aside className={styles.sidePanel}>
-          <div className={styles.sidePanelHeader}>
-            <h3 className={styles.sidePanelHeaderTitle}>고객 상세 구매 내역</h3>
-            <button className={styles.sidePanelHeaderButton} onClick={() => setSelectedCustomerId(null)}>
-              닫기
-            </button>
-          </div>
-          <div className={styles.sidePanelContent}>
-            {/* 고객 상세 */}
-            <div className={styles.placeholder}>고객 ID: {selectedCustomerId}</div>
-          </div>
-        </aside>
+      {selectedCustomer && (
+        <>
+          <div className={styles.backdrop} onClick={() => setSelectedCustomer(null)} />
+          <aside className={styles.sidePanel} role="dialog" aria-modal="true">
+            <div className={styles.sidePanelHeader}>
+              <h3 className={styles.sidePanelHeaderTitle}>고객 상세 구매 내역</h3>
+              <button className={styles.sidePanelHeaderButton} onClick={() => setSelectedCustomer(null)}>
+                닫기
+              </button>
+            </div>
+            <div className={styles.sidePanelContent}>
+              {/* 고객 상세 */}
+              <CustomerDetail customer={selectedCustomer} />
+            </div>
+          </aside>
+        </>
       )}
     </div>
   )
