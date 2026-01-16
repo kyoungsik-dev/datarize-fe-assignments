@@ -86,11 +86,15 @@ const CustomerList = ({ dateRange, onRowClick }: CustomerListProps) => {
         </thead>
         <tbody>
           {isFetching ? (
-            <tr>
-              <td colSpan={4} className={styles.loading}>
-                로딩 중...
-              </td>
-            </tr>
+            <>
+              {Array.from({ length: PAGE_LIMIT }).map((_, idx) => (
+                <tr key={`loading-${idx}`}>
+                  <td colSpan={4} className={styles.loading}>
+                    &nbsp;
+                  </td>
+                </tr>
+              ))}
+            </>
           ) : isError ? (
             <tr>
               <td colSpan={4} className={styles.error}>
