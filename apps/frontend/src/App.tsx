@@ -39,7 +39,7 @@ function App() {
             </label>
           </h2>
           {checkDateRange && <DateRangePicker from={dateRange.from} to={dateRange.to} onChange={setDateRange} />}
-          {!checkDateRange && <div>전체 기간을 조회합니다.</div>}
+          {!checkDateRange && <div style={{ height: '40px' }}>전체 기간을 조회합니다.</div>}
         </section>
         <div className={styles.sectionsContainer}>
           <section className={styles.section} style={{ flex: '0 1 400px' }}>
