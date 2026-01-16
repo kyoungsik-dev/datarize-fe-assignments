@@ -12,6 +12,11 @@ function App() {
     to: DEFAULT_DATE_RANGE.to,
   })
 
+  const handleRangeCheckbox = (checked: boolean) => {
+    setCheckDateRange(checked)
+    setDateRange({ from: '', to: '' })
+  }
+
   // 선택된 고객 ID (사이드 패널용)
   const [selectedCustomerId, setSelectedCustomerId] = useState<number | null>(null)
 
@@ -26,20 +31,20 @@ function App() {
           <h2 className={styles.sectionTitle}>
             기간 선택
             <label className={styles.dateRangeLabel}>
-              <input type="checkbox" checked={checkDateRange} onChange={(e) => setCheckDateRange(e.target.checked)} />
+              <input type="checkbox" checked={checkDateRange} onChange={(e) => handleRangeCheckbox(e.target.checked)} />
               사용
             </label>
           </h2>
           {checkDateRange && <DateRangePicker from={dateRange.from} to={dateRange.to} onChange={setDateRange} />}
           {!checkDateRange && <div>전체 기간을 조회합니다.</div>}
         </section>
-        <div>
-          <section className={styles.section}>
+        <div className={styles.sectionsContainer}>
+          <section className={styles.section} style={{ flex: '0 1 400px' }}>
             <h2 className={styles.sectionTitle}>가격대별 구매 빈도</h2>
             <PurchaseFrequencyTable dateRange={dateRange} />
           </section>
 
-          <section className={styles.section}>
+          <section className={styles.section} style={{ flex: '1 0 300px' }}>
             <h2 className={styles.sectionTitle}>고객 목록</h2>
 
             {/* 고객 목록 */}

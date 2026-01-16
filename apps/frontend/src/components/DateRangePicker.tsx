@@ -13,6 +13,22 @@ const DateRangePicker = ({ from, to, onChange }: DateRangePickerProps) => {
   const fromDate = parseISOToDate(from)
   const toDate = parseISOToDate(to)
 
+  // 시작일 maxDate: toDate와 DEFAULT_DATE_RANGE.to 중 더 이른 날짜
+  const maxStartDate = (() => {
+    const to = toDate
+    const max = parseISOToDate(DEFAULT_DATE_RANGE.to)
+    if (!to || !max) return to || max
+    return to < max ? to : max
+  })()
+
+  // 종료일 minDate: fromDate와 DEFAULT_DATE_RANGE.from 중 더 늦은 날짜
+  const minEndDate = (() => {
+    const from = fromDate
+    const min = parseISOToDate(DEFAULT_DATE_RANGE.from)
+    if (!from || !min) return from || min
+    return from > min ? from : min
+  })()
+
   return (
     <div className={styles.dateRangePicker}>
       <div>
@@ -24,7 +40,7 @@ const DateRangePicker = ({ from, to, onChange }: DateRangePickerProps) => {
           endDate={toDate}
           dateFormat="yyyy-MM-dd"
           minDate={parseISOToDate(DEFAULT_DATE_RANGE.from)!}
-          maxDate={toDate || undefined}
+          maxDate={maxStartDate || undefined}
           placeholderText="시작일"
         />
       </div>
@@ -37,7 +53,7 @@ const DateRangePicker = ({ from, to, onChange }: DateRangePickerProps) => {
           startDate={fromDate}
           endDate={toDate}
           dateFormat="yyyy-MM-dd"
-          minDate={fromDate || undefined}
+          minDate={minEndDate || undefined}
           maxDate={parseISOToDate(DEFAULT_DATE_RANGE.to)!}
           placeholderText="종료일"
         />

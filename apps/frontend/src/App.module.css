@@ -28,6 +28,12 @@
   gap: 2rem;
 }
 
+.sectionsContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
 .section {
   background-color: #fff;
   border-radius: 8px;
