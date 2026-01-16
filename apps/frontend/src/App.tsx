@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { DEFAULT_DATE_RANGE } from '@/utils'
 import DateRangePicker from '@/components/DateRangePicker'
 import PurchaseFrequencyTable from '@/components/PurchaseFrequencyTable'
+import CustomerList from '@/components/CustomerList'
 import styles from './App.module.css'
 
 function App() {
@@ -47,8 +48,7 @@ function App() {
           <section className={styles.section} style={{ flex: '1 0 300px' }}>
             <h2 className={styles.sectionTitle}>고객 목록</h2>
 
-            {/* 고객 목록 */}
-            <div className={styles.placeholder}>고객 목록 영역</div>
+            <CustomerList dateRange={dateRange} />
           </section>
         </div>
       </main>
